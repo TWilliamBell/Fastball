@@ -1,6 +1,4 @@
-from Tkinter import *
-import tkFileDialog
-import tkMessageBox
+from tkinter import *
 import random, os
 from datetime import datetime
 
@@ -10,7 +8,7 @@ from datetime import datetime
 class filebrowser(object):
     root=None
     def __init__(self,field):
-        self.location=tkFileDialog.askdirectory(initialdir=currentlocation,\
+        self.location=askdirectory(initialdir=currentlocation,\
 title="Select the location of your files")
 #replace the current contents of the corresponding text field with the
 #selected location
@@ -21,7 +19,7 @@ title="Select the location of your files")
 class errorbox(object):
     root=None
     def __init__(self,message):
-        self.location=tkMessageBox.showwarning("Warning",message)
+        self.location=showwarning("Warning",message)
         
 ##an object that presents the user with an information message
 class msgbox(object):
@@ -43,8 +41,7 @@ candfile.endswith(".bmp"):
     
 ##a function that checks whether all the parameters given by the user are OK    
 def acceptParams(name,ppts,cycles,ratio,frames,standdir,devdir,exploc):
-    if not name or not ppts or not cycles or not ratio or not frames \
-or not standdir or not devdir or not exploc:
+    if not name or not ppts or not cycles or not ratio or not frames or not standdir or not devdir or not exploc:
 #if any of the fields are empty, this is no good
         return False, "Please complete all the fields",None,None,None
     else:

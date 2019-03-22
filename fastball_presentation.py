@@ -1,13 +1,11 @@
-from Tkinter import *
-import tkFileDialog
-import tkMessageBox
+from tkinter import *
 import csv, os
 from psychopy import visual, core, gui, event
 
 
 #function that deploys error message if there is a problem with the script
 def showerror(errormsg):
-    tkMessageBox.showwarning(
+    showwarning(
         "Error",
         errormsg,
     )
@@ -49,9 +47,11 @@ def checkscript(scriptfile):
         with open(scriptfile,"rb") as candscript:
             script=candscript.read()
             return script
-    except OSError, IOError:
+    except OSError:
         #will occur if the script isn't in the given location or can't be read
-        raise OSError, IOError
+        raise OSError
+    except IOError:
+        raise IOError
 
 #function that makes sure all parts of the script are present
 def checkparams(script):
@@ -205,11 +205,11 @@ file structure is correct.")
 
     #make sure the cycles and ratio parameters match the schedule of trials
  #produced
-    if len(stimschedule)<>exparams["n_cycles"]:
+    if len(stimschedule)!= exparams["n_cycles"]:
         raise Exception("The number of trials given in the script does not \
 match the parameter for the number of standard+deviant cycles.")
     for cycle in stimschedule:
-        if len(cycle) <> exparams["stperdev"]+1:
+        if len(cycle) != exparams["stperdev"]+1:
             raise Exception("The number of standards per deviant provided in \
 the script does not match the specification in the parameters on at least one \
 trial.")         
@@ -264,15 +264,12 @@ scriptlocation=os.getcwd()
 prepwin = visual.Window(fullscr=False, monitor="surface",\
 units="deg", color =[1,1,1]) 
 
-
-
-
 loadingok=False
 
 while not loadingok:
     try:
         #ask the user for parameters using dialogue box
-        exparams["scriptfilename"]=tkFileDialog.askopenfilename(initialdir=scriptlocation,\
+        exparams["scriptfilename"]=askopenfilename(initialdir=scriptlocation,\
         title="Select the script you want to run",\
         filetypes=(("CSV files","*.csv"),))
         
@@ -357,4 +354,3 @@ showtext("The test is complete. Thank you for participating.",fastballwin)
 fastballwin.close()
 prepwin.close()
 core.quit()
-
